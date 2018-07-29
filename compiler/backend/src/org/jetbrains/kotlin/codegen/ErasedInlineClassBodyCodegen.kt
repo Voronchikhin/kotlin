@@ -36,7 +36,12 @@ class ErasedInlineClassBodyCodegen(
     override fun generateSyntheticPartsAfterBody() {
         super.generateSyntheticPartsAfterBody()
 
+        generateUnboxMethod()
+    }
+
+    private fun generateUnboxMethod() {
         val boxMethodDescriptor = InlineClassDescriptorResolver.createBoxFunctionDescriptor(descriptor) ?: return
+
         functionCodegen.generateMethod(
             Synthetic(null, boxMethodDescriptor), boxMethodDescriptor, object : FunctionGenerationStrategy.CodegenBased(state) {
                 override fun mapMethodSignature(
